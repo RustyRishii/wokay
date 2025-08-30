@@ -1,5 +1,11 @@
 import React from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import SubTaskRow from "../../Components/SubTaskRow";
 import SubTasks from "../../Components/SubTasks";
 import { Icons } from "../../Constants/Icons";
@@ -199,17 +205,29 @@ const OverView = () => {
           status={
             <View
               style={{
-                borderRadius: 4,
+                borderRadius: 6,
                 flexDirection: "row",
                 alignItems: "center",
                 gap: 3,
-                borderWidth: 1,
+                borderWidth: 0.9,
                 paddingVertical: 4,
                 paddingHorizontal: 6,
                 borderColor: "#C5C16D4D",
               }}
             >
-              <Icons.HighPriority />
+              <View
+                style={{
+                  paddingLeft: 5,
+                  paddingRight: 3,
+                  paddingBottom: 5,
+                  paddingTop: 3,
+                  borderColor: "#696500",
+                  borderWidth: 0.8,
+                  borderRadius: 100,
+                }}
+              >
+                <Icons.Clock />
+              </View>
               <Text style={{ color: "#696500" }}>Pending</Text>
             </View>
           }
@@ -245,14 +263,85 @@ const OverView = () => {
                 flexDirection: "row",
                 alignItems: "center",
                 gap: 3,
-                borderWidth: 1,
                 paddingVertical: 4,
                 paddingHorizontal: 6,
                 borderColor: "#E6224536",
               }}
             >
-              <Icons.HighPriority />
-              <Text style={{ color: "#E62245" }}>Assignee's</Text>
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 8 }}
+              >
+                <View
+                  style={{
+                    borderWidth: 1,
+                    borderColor: "#E6E6E6",
+                    flexDirection: "row",
+                    paddingVertical: 6,
+                    paddingHorizontal: 10,
+                    borderRadius: 100,
+                    alignItems: "center",
+                    alignSelf: "flex-start",
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: "#4944E9",
+                      fontSize: 16,
+                      marginRight: 6,
+                      // lineHeight: 20,
+                    }}
+                  >
+                    ●
+                  </Text>
+                  <Text
+                    style={{
+                      color: "#4944E9",
+                      fontSize: 12,
+                      fontFamily: "PlusJakartaSans_600SemiBold",
+                    }}
+                  >
+                    Launch
+                  </Text>
+                </View>
+              </View>
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 8 }}
+              >
+                <View
+                  style={{
+                    borderWidth: 1,
+                    borderColor: "#E6E6E6",
+                    flexDirection: "row",
+                    // padding: 6,
+                    paddingVertical: 6,
+                    paddingHorizontal: 10,
+                    borderRadius: 100,
+                    alignItems: "center",
+                    alignSelf: "flex-start",
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: "#4944E9",
+                      fontSize: 16,
+                      marginRight: 6,
+                      // lineHeight: 20,
+                    }}
+                  >
+                    ●
+                  </Text>
+                  <Text
+                    style={{
+                      color: "#565656",
+                      fontSize: 12,
+                      fontFamily: "PlusJakartaSans_600SemiBold",
+                    }}
+                  >
+                    Promo Video
+                  </Text>
+                </View>
+              </View>
+              {/* <Text style={{ color: "#E62245" }}>Assignee's</Text> */}
             </View>
           }
           title={"Tags"}
@@ -280,5 +369,25 @@ const styles = StyleSheet.create({
     backgroundColor: "#F8FBFF",
     borderColor: "#007AFF17",
     borderWidth: 1.34,
+  },
+  fab: {
+    position: "absolute",
+    width: 46,
+    height: 46,
+    alignItems: "center",
+    justifyContent: "center",
+    right: 30,
+    bottom: 30,
+    backgroundColor: "#0077F0",
+    borderRadius: 30,
+    elevation: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+  },
+  fabIcon: {
+    fontSize: 24,
+    color: "white",
   },
 });

@@ -3,11 +3,35 @@ import React from "react";
 import DraggerIcon from "../../assets/icons/dragger.svg";
 import MedIcon from "../../assets/icons/priorityIcons/med.svg";
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+
+// Define the navigation type
+type RootStackParamList = {
+  Tasks: undefined;
+  SubTask: undefined;
+  Projects: undefined;
+  SubProjects: undefined;
+};
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 const ListItem = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp>();
+
+  const handlePress = () => {
+    try {
+      navigation.navigate("SubTask");
+    } catch (error) {
+      console.error("Navigation error:", error);
+    }
+  };
+
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("SubTask")}>
+    <TouchableOpacity
+      onPress={handlePress}
+      activeOpacity={0.7}
+      style={{ backgroundColor: "transparent" }}
+    >
       <View
         style={{
           paddingVertical: 16,
@@ -27,8 +51,8 @@ const ListItem = () => {
                     borderRadius: 50,
                     height: 17,
                     width: 17,
-                    borderWidth: 1,
-                    borderColor: "green",
+                    borderWidth: 1.2,
+                    borderColor: "#BCBCBC",
                     marginRight: 8,
                   }}
                 />
@@ -56,7 +80,7 @@ const ListItem = () => {
                     borderRadius: 4,
                     borderColor: "#2956D32E",
                     paddingVertical: 5,
-                    paddingHorizontal: 7,
+                    paddingHorizontal: 6,
                   }}
                 >
                   <MedIcon height={12} width={12} />
@@ -69,7 +93,7 @@ const ListItem = () => {
                   </Text>
                 </View>
                 <View style={{ width: 6 }} />
-                <View
+                {/* <View
                   style={{
                     flexDirection: "row",
                     alignItems: "center",
@@ -97,6 +121,41 @@ const ListItem = () => {
                   >
                     Launch
                   </Text>
+                </View> */}
+                <View
+                  style={{ flexDirection: "row", alignItems: "center", gap: 8 }}
+                >
+                  <View
+                    style={{
+                      borderWidth: 1,
+                      borderColor: "#E6E6E6",
+                      flexDirection: "row",
+                      padding: 6,
+                      borderRadius: 100,
+                      alignItems: "center",
+                      alignSelf: "flex-start",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: "#4944E9",
+                        fontSize: 16,
+                        marginRight: 6,
+                        // lineHeight: 20,
+                      }}
+                    >
+                      ●
+                    </Text>
+                    <Text
+                      style={{
+                        color: "#4944E9",
+                        fontSize: 12,
+                        fontFamily: "PlusJakartaSans_600SemiBold",
+                      }}
+                    >
+                      Launch
+                    </Text>
+                  </View>
                 </View>
               </View>
 

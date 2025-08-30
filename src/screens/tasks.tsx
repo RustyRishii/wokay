@@ -1,6 +1,8 @@
 import { LinearGradient } from "expo-linear-gradient";
-
-import React, { useState } from "react";
+import * as Animatable from "react-native-animatable";
+import React, { useCallback, useMemo, useRef, useState } from "react";
+import Modal from "react-native-modal";
+import { TextInput } from "react-native";
 import {
   Image,
   StatusBar,
@@ -9,6 +11,7 @@ import {
   StyleSheet,
   Text,
   View,
+  TouchableOpacity,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import NotesIcon from "../../assets/icons/notes.svg";
@@ -20,6 +23,12 @@ import Projects from "./Projects";
 const iconSize = 13;
 
 const Tasks = () => {
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
   const [activeTab, setActiveTab] = useState("tasks");
 
   const handleTabPress = (tab: React.SetStateAction<string>) => {
@@ -32,112 +41,117 @@ const Tasks = () => {
     }
 
     return (
-      <View style={{ paddingHorizontal: 16 }}>
-        <View
-          style={{
-            borderColor: "#FFFFFF40",
-            borderWidth: 1,
-            paddingVertical: 12,
-            borderTopLeftRadius: 22,
-            borderTopRightRadius: 22,
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexDirection: "row",
-          }}
-        >
+      <>
+        <View style={{ paddingHorizontal: 16 }}>
           <View
             style={{
+              borderColor: "#FFFFFF40",
+              // borderColor: "green",
+              borderWidth: 1,
+              paddingVertical: 12,
+              borderTopLeftRadius: 22,
+
+              borderTopRightRadius: 22,
+              justifyContent: "space-between",
+              alignItems: "center",
               flexDirection: "row",
-              alignItems: "baseline",
-              gap: 8,
             }}
           >
-            <Text
-              style={{
-                color: "#042071",
-                fontFamily: "PlusJakartaSans_700Bold",
-                fontSize: 16,
-              }}
-            >
-              Tasks
-            </Text>
-            <View
-              style={{
-                paddingHorizontal: 4,
-                paddingVertical: 1.5,
-                borderRadius: 5,
-                borderWidth: 2,
-                borderColor: "#0077F024",
-              }}
-            >
-              <Text style={{ fontFamily: "Inter_500Medium", fontSize: 10 }}>
-                5
-              </Text>
-            </View>
-          </View>
-
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 7 }}>
-            <Icons.UpDown height={34} width={34} />
-
             <View
               style={{
                 flexDirection: "row",
-                alignItems: "center",
-                gap: 7,
-                borderWidth: 1,
-                backgroundColor: "#FCFCFC",
-                borderColor: "#E2E2E24D",
-                borderRadius: 34,
-                paddingVertical: 9,
-                paddingHorizontal: 12,
+                alignItems: "baseline",
+                gap: 8,
               }}
             >
-              <Icons.Filter width={12} height={8} />
               <Text
                 style={{
-                  color: "#555555",
-                  fontFamily: "Inter_500Medium",
-                  fontSize: 11,
+                  color: "#042071",
+                  fontFamily: "PlusJakartaSans_700Bold",
+                  fontSize: 16,
                 }}
               >
-                Filters
+                Tasks
               </Text>
+              <View
+                style={{
+                  paddingHorizontal: 4,
+                  paddingVertical: 1.5,
+                  borderRadius: 5,
+                  borderWidth: 2,
+                  borderColor: "#0077F024",
+                }}
+              >
+                <Text style={{ fontFamily: "Inter_500Medium", fontSize: 10 }}>
+                  5
+                </Text>
+              </View>
+            </View>
+
+            <View
+              style={{ flexDirection: "row", alignItems: "center", gap: 7 }}
+            >
+              <Icons.UpDown height={34} width={34} />
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 7,
+                  borderWidth: 1,
+                  backgroundColor: "#FCFCFC",
+                  borderColor: "#E2E2E24D",
+                  borderRadius: 34,
+                  paddingVertical: 9,
+                  paddingHorizontal: 12,
+                }}
+              >
+                <Icons.Filter width={12} height={8} />
+                <Text
+                  style={{
+                    color: "#555555",
+                    fontFamily: "Inter_500Medium",
+                    fontSize: 11,
+                  }}
+                >
+                  Filters
+                </Text>
+              </View>
             </View>
           </View>
-        </View>
 
-        {/* <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false}> */}
-        <View
-          style={{
-            backgroundColor: "#8DC6FF0F",
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 8,
-            paddingVertical: 7,
-          }}
-        >
-          <Icons.Calendar />
-          <Text
+          {/* <ScrollView scrollEnabled={true} showsVerticalScrollIndicator={false}> */}
+          <View
             style={{
-              fontFamily: "PlusJakartaSans_600SemiBold",
-              fontSize: 12,
-              color: "#0077F0",
+              backgroundColor: "#8DC6FF0F",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 8,
+              paddingVertical: 7,
             }}
           >
-            Today
-          </Text>
+            <Icons.Calendar />
+            <Text
+              style={{
+                fontFamily: "PlusJakartaSans_600SemiBold",
+                fontSize: 12,
+                color: "#0077F0",
+              }}
+            >
+              Today
+            </Text>
+          </View>
+          <ListItem />
+          <ListItem />
+          <ListItem />
+          <ListItem />
+          <ListItem />
+          <ListItem />
+          <ListItem />
+          <ListItem />
+          <ListItem />
         </View>
-        <ListItem />
-        <ListItem />
-        <ListItem />
-        <ListItem />
-        <ListItem />
-        <ListItem />
-        <ListItem />
-        <ListItem />
-        <ListItem />
-        {/* </ScrollView> */}
-      </View>
+      </>
     );
   };
 
@@ -152,12 +166,6 @@ const Tasks = () => {
             end={{ x: 0, y: 0.3 }}
             style={styles.linearGradient}
           >
-            {/* <LinearGradient
-            colors={["#4A9EFF", "#D4EBFF"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 0, y: 1 }}
-            style={styles.linearGradient}
-          > */}
             <View>
               <View
                 style={{
@@ -308,7 +316,7 @@ const Tasks = () => {
                         justifyContent: "center",
                         backgroundColor: "#F25353",
                         borderRadius: 10,
-                        marginRight: 65,
+                        marginRight: 60,
                       }}
                     >
                       <Icons.Overdue height={iconSize} width={iconSize} />
@@ -355,7 +363,7 @@ const Tasks = () => {
                         justifyContent: "center",
                         backgroundColor: "#FFB53D",
                         borderRadius: 10,
-                        marginRight: 65,
+                        marginRight: 60,
                       }}
                     >
                       <Icons.Todo height={iconSize} width={iconSize} />
@@ -367,7 +375,7 @@ const Tasks = () => {
                         fontSize: 21,
                       }}
                     >
-                      1
+                      3
                     </Text>
                   </View>
                   <Text
@@ -402,7 +410,7 @@ const Tasks = () => {
                         justifyContent: "center",
                         backgroundColor: "#24AA51",
                         borderRadius: 10,
-                        marginRight: 65,
+                        marginRight: 60,
                       }}
                     >
                       <Icons.Completed height={iconSize} width={iconSize} />
@@ -414,7 +422,7 @@ const Tasks = () => {
                         fontSize: 21,
                       }}
                     >
-                      1
+                      4
                     </Text>
                   </View>
                   <Text
@@ -433,6 +441,172 @@ const Tasks = () => {
 
           {renderContent()}
         </ScrollView>
+        <TouchableOpacity
+          style={styles.fab}
+          onPress={toggleModal} // 👈 open modal
+        >
+          <Icons.PlusIcon height={18} width={18} fill="white" stroke="white" />
+        </TouchableOpacity>
+
+        {/* Task Creation Modal */}
+        <Modal
+          isVisible={isModalVisible}
+          onBackdropPress={toggleModal}
+          style={{ justifyContent: "flex-end", margin: 0 }}
+        >
+          <View
+            style={{
+              backgroundColor: "white",
+              borderTopLeftRadius: 16,
+              borderTopRightRadius: 16,
+              padding: 16,
+            }}
+          >
+            {/* Top Row */}
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: 12,
+              }}
+            >
+              <TouchableOpacity
+                style={{
+                  borderWidth: 1,
+                  borderColor: "#0077F0",
+                  borderRadius: 16,
+                  paddingHorizontal: 12,
+                  paddingVertical: 4,
+                }}
+              >
+                <Text style={{ color: "#0077F0", fontWeight: "600" }}>
+                  Personal
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={toggleModal}>
+                <Text style={{ color: "#888", fontWeight: "600" }}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* Title Input */}
+            <TextInput
+              autoFocus={true}
+              placeholder="Type here to add a task"
+              style={{
+                fontSize: 16,
+                fontWeight: "600",
+                marginBottom: 6,
+              }}
+            />
+            <TextInput
+              placeholder="Description ..."
+              style={{
+                fontSize: 14,
+                color: "#666",
+                marginBottom: 12,
+              }}
+            />
+
+            {/* Options Row */}
+            <View style={{ flexDirection: "row", gap: 8, marginBottom: 12 }}>
+              <TouchableOpacity
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  backgroundColor: "#F3F3F3",
+                  borderRadius: 20,
+                  paddingHorizontal: 12,
+                  paddingVertical: 6,
+                }}
+              >
+                <Icons.Calendar
+                  width={14}
+                  height={14}
+                  style={{ marginRight: 6 }}
+                />
+                <Text>Today</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  backgroundColor: "#F3F3F3",
+                  borderRadius: 20,
+                  paddingHorizontal: 12,
+                  paddingVertical: 6,
+                }}
+              >
+                <Icons.User width={14} height={14} style={{ marginRight: 6 }} />
+                <Text>Assignee</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  backgroundColor: "#4368F9",
+                  borderRadius: 20,
+                  paddingHorizontal: 12,
+                  paddingVertical: 6,
+                }}
+              >
+                <Text style={{ color: "white" }}>Todo</Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* Priority Row */}
+            <View style={{ flexDirection: "row", gap: 8, marginBottom: 16 }}>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: "#F3F3F3",
+                  borderRadius: 20,
+                  paddingHorizontal: 12,
+                  paddingVertical: 6,
+                }}
+              >
+                <Text>High</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: "#F3F3F3",
+                  borderRadius: 20,
+                  paddingHorizontal: 12,
+                  paddingVertical: 6,
+                }}
+              >
+                <Text>Med</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  borderColor: "#0077F0",
+                  borderWidth: 1,
+                  borderRadius: 20,
+                  paddingHorizontal: 12,
+                  paddingVertical: 6,
+                }}
+              >
+                <Text style={{ color: "#0077F0" }}>Low</Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* Add Button */}
+            <TouchableOpacity
+              style={{
+                alignSelf: "flex-end",
+                backgroundColor: "#0077F0",
+                borderRadius: 10,
+                paddingHorizontal: 18,
+                paddingVertical: 10,
+              }}
+              onPress={() => {
+                console.log("Task added!");
+                toggleModal();
+              }}
+            >
+              <Text style={{ color: "white", fontWeight: "600" }}>Add →</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
       </SafeAreaView>
     </>
   );
@@ -534,6 +708,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 10,
   },
+  sheetContent: {
+    flex: 1,
+    padding: 20,
+  },
+  sheetTitle: {
+    fontSize: 16,
+    fontWeight: "600",
+    marginBottom: 12,
+  },
   card: {
     backgroundColor: "white",
     borderRadius: 15,
@@ -586,5 +769,42 @@ const styles = StyleSheet.create({
     fontFamily: "PlusJakartaSans_600SemiBold",
     fontSize: 13,
     color: "#444444",
+  },
+  fab: {
+    position: "absolute",
+    width: 46,
+    height: 46,
+    alignItems: "center",
+    justifyContent: "center",
+    right: 30,
+    bottom: 30,
+    backgroundColor: "#0077F0",
+    borderRadius: 30,
+    elevation: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+  },
+  fabIcon: {
+    fontSize: 24,
+    color: "white",
+  },
+  bottomModal: {
+    justifyContent: "flex-end",
+    margin: 0,
+  },
+  modalContent: {
+    backgroundColor: "white",
+    padding: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  addBtn: {
+    marginTop: 20,
+    backgroundColor: "#0077F0",
+    padding: 12,
+    borderRadius: 10,
+    alignItems: "center",
   },
 });

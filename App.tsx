@@ -36,6 +36,7 @@ function TaskStack() {
       screenOptions={{
         headerShown: false,
         animation: "slide_from_right",
+        gestureEnabled: true,
       }}
     >
       <NativeTaskStack.Screen component={Tasks} name="Tasks" />
@@ -54,7 +55,7 @@ function MyTabs() {
       screenOptions={{
         headerShown: false,
         tabBarLabelStyle: {
-          marginTop: 3,
+          // marginTop: 3,
           fontSize: 12,
           fontWeight: "600",
         },
@@ -71,6 +72,7 @@ function MyTabs() {
               {focused && (
                 <View
                   style={{
+                    top: -6,
                     height: 2,
                     width: 50,
                     borderRadius: 2,
@@ -108,6 +110,7 @@ function MyTabs() {
               {focused && (
                 <View
                   style={{
+                    top: -6,
                     height: 2,
                     width: 50,
                     borderRadius: 2,

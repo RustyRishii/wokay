@@ -27,6 +27,9 @@ import calendarGrey from "../../assets/icons/calendarGrey.svg";
 import DraggerIcon from "../../assets/icons/dragger.svg";
 import LaunchCircle from "../../assets/icons/launchCircle.svg";
 import PendingIcon from "../../assets/icons/pending.svg";
+import DescriptionsIcon from "../../assets/icons/description.svg";
+import ClockIcon from "../../assets/icons/clock.svg";
+import UserIcon from "../../assets/icons/user.svg";
 
 export const Icons = {
   LowPriority: LowPriority,
@@ -58,4 +61,7 @@ export const Icons = {
   Dragger: DraggerIcon,
   LaunchCircle: LaunchCircle,
   PendingIcon: PendingIcon,
+  Description: DescriptionsIcon,
+  Clock: ClockIcon,
+  User: UserIcon,
 };

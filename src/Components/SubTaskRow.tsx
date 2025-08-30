@@ -12,7 +12,8 @@ const SubTaskRow = ({ title, status }: SubTaskRow) => {
     <View
       style={{
         paddingHorizontal: 21,
-        paddingVertical: 12,
+        paddingVertical: 6,
+        gap: 8,
         backgroundColor: "white",
       }}
     >
@@ -51,7 +52,12 @@ const SubTaskRow = ({ title, status }: SubTaskRow) => {
       </View>
 
       <View
-        style={{ borderWidth: 0.3, borderColor: "#000000", marginTop: 8 }}
+        style={{
+          width: "100%",
+          borderColor: "#B2B2B2",
+          borderWidth: 0.2,
+          marginTop: 8,
+        }}
       />
     </View>
   );

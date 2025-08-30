@@ -1,12 +1,22 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Icons } from "../Constants/Icons";
 import Attachments from "./SubTasks/Attachments";
 import Comments from "./SubTasks/comments";
 import OverView from "./SubTasks/overview";
+
+// Define the navigation type
+type RootStackParamList = {
+  Tasks: undefined;
+  SubTask: undefined;
+  Projects: undefined;
+  SubProjects: undefined;
+};
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 const TopTabBar = createMaterialTopTabNavigator();
 
@@ -52,12 +62,18 @@ function SubTaskTabs() {
 }
 
 const SubTask = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp>();
+
+  const handleGoBack = () => {
+    try {
+      navigation.goBack();
+    } catch (error) {
+      console.error("Navigation error:", error);
+    }
+  };
+
   return (
-    <SafeAreaView
-      edges={["top"]}
-      style={{ flex: 1, backgroundColor: "#fff", height: "100%" }}
-    >
+    <View style={{ flex: 1, backgroundColor: "#fff" }}>
       <View
         style={{
           flexDirection: "row",
@@ -70,7 +86,7 @@ const SubTask = () => {
         <TouchableOpacity
           style={{ padding: 8 }}
           hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-          onPress={() => navigation.goBack()}
+          onPress={handleGoBack}
         >
           <Icons.Back />
         </TouchableOpacity>
@@ -86,7 +102,7 @@ const SubTask = () => {
       <View style={{ flex: 1 }}>
         <SubTaskTabs />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

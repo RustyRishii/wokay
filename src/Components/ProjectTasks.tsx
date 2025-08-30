@@ -134,7 +134,8 @@ const ProjectTasks = ({ title, project, status }: Props) => {
 
       <View
         style={{
-          padding: 8,
+          paddingVertical: 4,
+          paddingHorizontal: 8,
           borderRadius: 100,
           borderColor: "#E6E6E685",
           borderWidth: 1,
@@ -155,7 +156,7 @@ const ProjectTasks = ({ title, project, status }: Props) => {
             borderColor: "#0B4886",
           }}
         /> */}
-        <Icons.PendingIcon height={16} width={16} />
+        <Icons.PendingIcon height={16.47} width={16.47} />
         <Text style={{ color: "#262626", fontFamily: "Inter_400Regular" }}>
           {status}
         </Text>
