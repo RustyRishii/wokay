@@ -4,6 +4,8 @@ import DraggerIcon from "../../assets/icons/dragger.svg";
 import MedIcon from "../../assets/icons/priorityIcons/med.svg";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { Icons } from "../Constants/Icons";
+import { PriorityLevel } from "../Constants/types";
 
 // Define the navigation type
 type RootStackParamList = {
@@ -13,9 +15,18 @@ type RootStackParamList = {
   SubProjects: undefined;
 };
 
+type PriorityType = "High" | "Med" | "Low";
+
+interface Props {
+  title: String;
+  Project: String;
+  Priority: PriorityLevel;
+  Status: String;
+}
+
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
-const ListItem = () => {
+const ListItem = ({ title, Project, Priority, Status }: Props) => {
   const navigation = useNavigation<NavigationProp>();
 
   const handlePress = () => {
@@ -66,7 +77,8 @@ const ListItem = () => {
                       letterSpacing: 0.02,
                     }}
                   >
-                    Web screens for video
+                    {/* Web screens for video */}
+                    {title}
                   </Text>
                 </View>
               </View>
@@ -79,49 +91,28 @@ const ListItem = () => {
                     borderWidth: 1,
                     borderRadius: 4,
                     borderColor: "#2956D32E",
-                    paddingVertical: 5,
+                    paddingVertical: 4,
                     paddingHorizontal: 6,
                   }}
                 >
-                  <MedIcon height={12} width={12} />
+                  {Priority === "Low" ? (
+                    <Icons.LowPriority height={12} width={12} />
+                  ) : Priority === "Med" ? (
+                    <Icons.MediumPriority height={12} width={12} />
+                  ) : Priority === "High" ? (
+                    <Icons.HighPriority height={12} width={12} />
+                  ) : null}
+                  <View style={{ width: 3 }} />
                   <Text
                     style={{
                       color: "#0C7C00",
                     }}
                   >
-                    Med
+                    {Priority}
                   </Text>
                 </View>
                 <View style={{ width: 6 }} />
-                {/* <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    borderWidth: 1,
-                    borderRadius: 100,
-                    borderColor: "#2956D32E",
-                    paddingVertical: 5,
-                    paddingHorizontal: 7,
-                  }}
-                >
-                  <Text
-                    style={{
-                      color: "#4944E9",
-                      paddingRight: 7,
-                      fontSize: 16,
-                    }}
-                  >
-                    •
-                  </Text>
-                  <Text
-                    style={{
-                      color: "#292929",
-                      fontFamily: "PlusJakartaSans_600SemiBold",
-                    }}
-                  >
-                    Launch
-                  </Text>
-                </View> */}
+
                 <View
                   style={{ flexDirection: "row", alignItems: "center", gap: 8 }}
                 >
@@ -148,12 +139,14 @@ const ListItem = () => {
                     </Text>
                     <Text
                       style={{
-                        color: "#4944E9",
+                        // color: "#4944E9",
+                        color: "#292929",
+
                         fontSize: 12,
                         fontFamily: "PlusJakartaSans_600SemiBold",
                       }}
                     >
-                      Launch
+                      {Project}
                     </Text>
                   </View>
                 </View>
@@ -188,7 +181,7 @@ const ListItem = () => {
               borderColor: "#0B4886",
             }}
           />
-          <Text style={{ color: "#0B4886" }}>Todo</Text>
+          <Text style={{ color: "#0B4886" }}>{Status}</Text>
         </View>
       </View>
     </TouchableOpacity>

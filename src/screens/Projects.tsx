@@ -63,10 +63,10 @@ const Projects = () => {
                 ProjectTitle={"Develop marketing strategy"}
                 Members={4}
               />
-              <ProjectsComponent
+              {/* <ProjectsComponent
                 ProjectTitle={"Develop marketing strategy"}
                 Members={4}
-              />
+              /> */}
             </View>
           </View>
         </View>
